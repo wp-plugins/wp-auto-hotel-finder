@@ -21,7 +21,7 @@ The list of hotels is ordered from the nearest center of the map to farthest.
 It is also possible to place the search form of a place. With each drag the map, everything is recalculated.
 
 == Installation ==
-
+Download zipped documentation here http://goo.gl/lrnb2j
 To install and use this plugin, watch the video! 
 
 [youtube https://www.youtube.com/watch?v=T9NBmlTK1LI]
