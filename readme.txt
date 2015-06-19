@@ -7,8 +7,8 @@ Tested up to: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
-
+Show a detailed map of hotels with a shortcode or by cat/tag with auto searching for address inside post
+ 
 == Description ==
 
 With this plugin, you can show the map with the hotel in all the places you want.
