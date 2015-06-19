@@ -1,7 +1,7 @@
 === WP Auto Hotel Finder ===
 Contributors: Lucia Intelisano
 Donate link: http://www.luciaintelisano.it/wp-auto-hotel-finder/
-Tags: auto, find, google maps, hotel, hotels, location, map, photo, plugin, responsive, slider, wordpress
+Tags: auto, find, google maps, hotel, hotels, location, map, photo, plugin, responsive, slider, wordpress, address location map, address map, AJAX, business locations, coordinates,  geo, geocoding, google, google maps, jquery, latitude, location finder, locator maps, longitude, map creator, map maker, map multiple locations, map of addresses, map tools, mapper, mapping, mapping software, mapping tools, maps, page, places, plugin, post, posts, shortcode, hotel finder, hotel locator, hotel locator map, hotels, widget, wordpress locator, zip code, zip code search, zipcode
 Requires at least: 3.1
 Tested up to: 4.1
 License: GPLv2 or later
@@ -49,14 +49,4 @@ It is also possible to place the search form of a place. With each drag the map,
 * A change since the previous version.
 * Another change.
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
+ 
