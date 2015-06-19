@@ -11,6 +11,8 @@ Show a detailed map of hotels with a shortcode or by cat/tag with auto searching
  
 == Description ==
 
+[youtube https://www.youtube.com/watch?v=T9NBmlTK1LI]
+
 With this plugin, you can show the map with the hotel in all the places you want.
 Suppose you have a webcam-containing 2000 items and would like to insert a list of hotels for every place. 
 No more having to edit each item individually, no fatigue, he'll find the correct location.
