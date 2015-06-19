@@ -20,6 +20,11 @@ It is also possible to place the search form of a place. With each drag the map,
 
 == Installation ==
 
+To install and use this plugin, watch the video! 
+
+[youtube https://www.youtube.com/watch?v=T9NBmlTK1LI]
+
+
 **To install the plugin manually:**
 
 1. Extract the contents of the archive (zip file)
