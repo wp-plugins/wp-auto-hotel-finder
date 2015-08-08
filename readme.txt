@@ -53,8 +53,8 @@ To install and use this plugin, watch the video!
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 2.0 =
+Smart loading of scripts
+Button “add hotel map” on editor  
 
  
