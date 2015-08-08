@@ -4,7 +4,7 @@
 Plugin Name:  WP Auto Hotel Finder
 Plugin URI: http://www.luciaintelisano.it/wp-auto-hotel-finder
 Description: A plugin to get/find hotels on google maps in a very easy way
-Version: 1.0.0
+Version: 2.0
 Author: Lucia Intelisano
 Author URI: http://www.luciaintelisano.it
 */
@@ -16,7 +16,7 @@ Author URI: http://www.luciaintelisano.it
 	
  	 
 	/* Extract text inside two tags */
-	function getRow($cnt, $tagStart, $tagEnd) {
+	function getRow111($cnt, $tagStart, $tagEnd) {
 		$start = 0;
 		$end = strlen($cnt);
 		if (!(strpos($cnt, $tagStart)===false)) {
@@ -28,14 +28,70 @@ Author URI: http://www.luciaintelisano.it
 		$row = substr($cnt, $start, $end-$start);	
 		return $row;
 	}
+	
+	
+	function wphf_is_shortcode($incat=0) {
+ 
+		global $post;
+ 
+		if ($incat==0 && strstr( $post->post_content, '[wmhf ' ) ) {
+			 return true;
+		} else {
+			$cats = strtolower(get_option('wphf_view_on_tag'));
+		 
+			$attachok=0;
+			if  ($cats!="") {
+				 $arrCat = split(",",$cats);
+				 $categories = get_the_category();
+				 
+				 if($categories){
+					foreach($categories as $category) {
+						 
+							foreach($arrCat as $cat) {
+								
+								if (strtolower($category->name)==$cat) {
+								
+									$attachok=1;
+								}
+							}
+					}
+				}	
+			}
+			$tagnames = trim(strtolower(get_option('wphf_view_on_tag')));	 
+			 
+			if ($tagnames!="") {
+		 		echo $tagnames;
+				$posttags = get_the_tags();
+				if ($posttags!="") {
+						 
+					 	$arrTags = split(",",$tagnames);
+				  		foreach($posttags as $tagpost) {
+							foreach($arrTags as $tagname) {							 
+								if (trim(strtolower($tagpost->name))==$tagname) {
+										$attachok=1;
+								}	 
+							}
+				  		}
+				}
+			}	
+			 
+			if ($attachok==1) {
+				return true;
+			}
+		
+		}
+		return false;
+	}	
 		
 	/**
  		* Function for adding header style sheets and js
  	*/
 	function wphf_theme_name_scripts() {	 
-		wp_enqueue_style('default_style_wpmhf_1', plugins_url('css/stylemap.css', __FILE__), false, time());
-		wp_enqueue_script( 'default_scripts_wpmhf_1', "https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,geometry", array(), '', false );
-		wp_enqueue_script( 'default_scripts_wpmhf_2', plugins_url('js/scriptmap.js', __FILE__), array(), time(), true );
+		if (wphf_is_shortcode(0))  {
+			wp_enqueue_style('default_style_wpmhf_1', plugins_url('css/stylemap.css', __FILE__), false, time());
+			wp_enqueue_script( 'default_scripts_wpmhf_1', "https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,geometry", array(), '', false );
+			wp_enqueue_script( 'default_scripts_wpmhf_2', plugins_url('js/scriptmap.js', __FILE__), array(), time(), true );
+		}
 	} 
 		
 		
@@ -53,9 +109,10 @@ Author URI: http://www.luciaintelisano.it
 	function wphf_init(){
 		add_action( 'wp_enqueue_scripts', 'wphf_theme_name_scripts' ); 
 	 	add_action('admin_menu', 'wphf_plugin_setup_menu');
-	 	add_action( 'admin_init', 'register_mysettings' );   
-	 	add_filter( 'the_content', 'my_the_post_action' );
+	 	add_action( 'admin_init', 'wphf_register_mysettings' );   
+	 	add_filter( 'the_content', 'wphf_my_the_post_action' );
 		add_shortcode('wmhf', 'wphf_createMap');
+		add_action('media_buttons', 'wphf_add_my_media_button');
 	}	
 		
 		
@@ -92,7 +149,7 @@ Author URI: http://www.luciaintelisano.it
 	/**
  * Function for register settings
  */
-function register_mysettings() {
+function wphf_register_mysettings() {
 	register_setting( 'wphf-settings-group', 'wphf_autocomplete_search' );
 	register_setting( 'wphf-settings-group', 'wphf_view_on_cat' );
 	register_setting( 'wphf-settings-group', 'wphf_view_on_tag' );
@@ -178,39 +235,9 @@ function wphf_settings_page() {
 	/**
  * Function for add map on post 
  */
-function my_the_post_action( $content ) {
- if ( is_single() ) {
-	$cats = strtolower(get_option('wphf_view_on_cat'));
-	$attachok=0;
-	if  ($cats!="") {
-		 $arrCat = split(",",$cats);
-		 $categories = get_the_category();
-		 if($categories){
-			foreach($categories as $category) {
-					foreach($arrCat as $cat) {
-						if (strtolower($category->name)==$cat) {
-							$attachok=1;
-					 	}
-					}
-			}
-		}	
-	}
-	$tagnames = trim(strtolower(get_option('wphf_view_on_tag')));	 
-	if ($tagnames!="") {
-		 
-		$posttags = get_the_tags();
-		if ($posttags!="") {
- 			 $arrTags = split(",",$tagnames);
-		  foreach($posttags as $tagpost) {
-	 			foreach($arrTags as $tagname) {
-					if (trim(strtolower($tagpost->name))==$tagname) {
-							$attachok=1;
-					}	 
-				}
-		  }
-		}
-	}	
-	if ($attachok==1) {
+function wphf_my_the_post_action( $content ) {
+  	
+	if (wphf_is_shortcode(1)) {
 			global $post, $wp_query;
     		$post_id = $post->ID;
     		$atts = array();
@@ -224,7 +251,7 @@ function my_the_post_action( $content ) {
     				$start_html_tag =  get_option('wphf_start_html_tag');
     				$end_html_tag =  get_option('wphf_end_html_tag');
     				if ($start_html_tag!="") {
-    					$loc = getRow($post->post_content, $start_html_tag, $end_html_tag); 
+    					$loc = getRow111($post->post_content, $start_html_tag, $end_html_tag); 
     				}  
     				
     				if ($loc=="" && get_option('wphf_title')==true) {
@@ -248,7 +275,7 @@ function my_the_post_action( $content ) {
     		$atts["location"] = $loc; 
 			$cnt = wphf_createMap($atts);
 			$content.=$cnt;
-	}
+ 
 }	
 	return $content;
  
@@ -257,5 +284,10 @@ function my_the_post_action( $content ) {
     
 }
  
+ 
+ 
+ function wphf_add_my_media_button() {
+    echo '<a href="javascript:wp.media.editor.insert(\'[wmhf location=&quot;&quot; lat=&quot;&quot; lng=&quot;&quot;]\');" id="insert-my-media" class="button">Add hotel map</a>';
+}
  
 ?>
